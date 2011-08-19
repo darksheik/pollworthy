@@ -1,0 +1,14 @@
+The purpose of this test is to demonstrate your ability to pick up new technologies and develop applications cleanly and following standard practices. The baseline functionality is described here, but you are encouraged to push it further. Though the time it takes you to complete the test is a consideration (successful candidates typically send something back within a day), equally important are the software design choices you make and the thought processes that went into your submission:
+
+Create a web application with the Grails framework, available at http://grails.org, that meets the following requirements:
+
+    a visitor can create a poll, where a poll consists of a question and a number of options (only one option can be selected at a time)
+    a visitor can see view and vote on other polls
+    a visitor can view poll results before or after voting
+    a visitor can leave a comment about a poll
+    there is some mechanism for users to log in (anonymous users can still view all data and comment on a poll, but not vote)
+    on initialization, the application is automatically populated with sample data
+    static page loads are minimized using AJAX techniques
+    do not use Grails’ scaffolding
+
+After completing the above tasks, package up the entire project directory in a .zip file. Create a webcast/screen recording demonstrating the functionality of the project.
