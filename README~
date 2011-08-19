@@ -20,4 +20,4 @@ Classes:
             |
 USER <--- POLL  <---- QUESTION
   |                       |
-  *-------ANSWER----------*
+  *-USER_CHOSEN QUESTION--*
