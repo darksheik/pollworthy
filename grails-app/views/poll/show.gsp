@@ -23,6 +23,26 @@
 			</g:if>
 			<ol class="property-list poll">
 			
+				<g:if test="${pollInstance?.name}">
+				<li class="fieldcontain">
+					<span id="name-label" class="property-label"><g:message code="poll.name.label" default="Name" /></span>
+					
+						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${pollInstance}" field="name"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${pollInstance?.questions}">
+				<li class="fieldcontain">
+					<span id="questions-label" class="property-label"><g:message code="poll.questions.label" default="Questions" /></span>
+					
+						<g:each in="${pollInstance.questions}" var="q">
+						<span class="property-value" aria-labelledby="questions-label"><g:link controller="question" action="show" id="${q.id}">${q?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">

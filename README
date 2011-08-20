@@ -15,9 +15,10 @@ After completing the above tasks, package up the entire project directory in a .
 
 Classes:
 
-         COMMENT
-            ^
-            |
-USER <--- POLL  <---- QUESTION
-  |                       |
-  *-------ANSWER----------*
+  --------COMMENT
+  |          |
+  V          V
+USER <---  POLL <---- QUESTION
+  ^                       |
+  |                       V
+  *-------RESPONSE<----ANSWER

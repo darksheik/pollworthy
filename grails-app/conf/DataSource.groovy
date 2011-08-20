@@ -13,8 +13,17 @@ hibernate {
 environments {
     development {
         dataSource {
-            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
-            url = "jdbc:h2:mem:devDb"
+
+
+	pooled = true
+	dbCreate = "update"
+	url = "jdbc:mysql://localhost/pollworthy"
+	driverClassName = "com.mysql.jdbc.Driver"
+	username = "root"
+	password = "langerhans1"	
+
+//            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+//            url = "jdbc:h2:mem:devDb"
         }
     }
     test {

@@ -23,6 +23,37 @@
 			</g:if>
 			<ol class="property-list user">
 			
+				<g:if test="${userInstance?.comments}">
+				<li class="fieldcontain">
+					<span id="comments-label" class="property-label"><g:message code="user.comments.label" default="Comments" /></span>
+					
+						<g:each in="${userInstance.comments}" var="c">
+						<span class="property-value" aria-labelledby="comments-label"><g:link controller="comment" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.name}">
+				<li class="fieldcontain">
+					<span id="name-label" class="property-label"><g:message code="user.name.label" default="Name" /></span>
+					
+						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${userInstance}" field="name"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${userInstance?.polls}">
+				<li class="fieldcontain">
+					<span id="polls-label" class="property-label"><g:message code="user.polls.label" default="Polls" /></span>
+					
+						<g:each in="${userInstance.polls}" var="p">
+						<span class="property-value" aria-labelledby="polls-label"><g:link controller="poll" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 			</ol>
 			<g:form>
 				<fieldset class="buttons">
