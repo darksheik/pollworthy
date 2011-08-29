@@ -34,17 +34,28 @@ class PollController {
     def saveanswers() {
         def pollInstance = Poll.get(params.id)
         // Destroy old responses
-        def r = Response.findAllByUser(session.user)
+        def u = User.findById(session.user.id)
+        def r = Response.findAllByUser(u)
         r.each {
           if (it.answer.question.poll.id == pollInstance.id) {
              it.delete()
           }
         }
 
+        def outputString = new String()
+
         // Insert new ones
+        params.each {
+          if (it.key.startsWith('answer')){
+          outputString += it.key + " - " + it.value + " - " + it.value.class + ", "
+          def a = Answer.findById(it.value.toInteger())
+          def rn = new Response(user:u,answer:a).save()
+          outputString += a.toString()
+          outputString += rn.toString()
+          }
+        }
         
-        
-        flash.message = message(code: "Done!")
+        flash.message = message(code: outputString)
         redirect(action: "show", id: pollInstance.id)
     }
     def show() {

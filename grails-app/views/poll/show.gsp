@@ -45,7 +45,7 @@
 						<g:each in="${pollInstance.questions.sort{it.id}}" var="q">
 						   <li class="questioninpoll">${q.text}</li>
                                                    <g:if test="${q?.answers}">
-                                                    <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}}" value="1" >
+                                                    <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}.id}" value="1" >
                                                    <p>${it.radio} ${it.label} </p>
                                                    </g:radioGroup>
                                                    </g:if>
