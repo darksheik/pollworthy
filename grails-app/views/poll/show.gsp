@@ -21,35 +21,51 @@
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
+			<g:form>
 			<ol class="property-list poll">
 			
 				<g:if test="${pollInstance?.name}">
 				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="poll.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${pollInstance}" field="name"/></span>
+					(id ${pollInstance?.user}, logged in = ${session.user}, same? ${pollInstance?.user.id == session.user.id}) 				
+						Poll # ${pollInstance?.id}: <B><I><g:fieldValue bean="${pollInstance}" field="name"/></span></I></B> 
+                                        &nbsp;&nbsp;(by <g:link controller="user" action="show" id="${pollInstance.user.id}">
+                                        <g:if test="${pollInstance?.user.id == session.user.id}">
+                                          you!
+                                        </g:if>
+                                        <g:else>
+                                          ${pollInstance?.user.name}
+                                        </g:else></g:link>)
 					
 				</li>
 				</g:if>
 			
 				<g:if test="${pollInstance?.questions}">
 				<li class="fieldcontain">
-					<span id="questions-label" class="property-label"><g:message code="poll.questions.label" default="Questions" /></span>
-					
-						<g:each in="${pollInstance.questions}" var="q">
-						<span class="property-value" aria-labelledby="questions-label"><g:link controller="question" action="show" id="${q.id}">${q?.encodeAsHTML()}</g:link></span>
+					<ol class="questions-poll">
+						<g:each in="${pollInstance.questions.sort{it.id}}" var="q">
+						   <li class="questioninpoll">${q.text}</li>
+                                                   <g:if test="${q?.answers}">
+                                                    <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}}" value="1" >
+                                                   <p>${it.radio} ${it.label} </p>
+                                                   </g:radioGroup>
+                                                   </g:if>
 						</g:each>
+                                        </ol>
 					
 				</li>
 				</g:if>
 			
 			</ol>
-			<g:form>
+
 				<fieldset class="buttons">
 					<g:hiddenField name="id" value="${pollInstance?.id}" />
+                                <g:if test="${pollInstance?.user.id == session.user.id}">
 					<g:link class="edit" action="edit" id="${pollInstance?.id}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
+				</g:if>
+		<g:actionSubmit class="saveanswers" action="saveanswers" value="${message(code: 'default.button.save.label', default: 'Save Answers!')}"  />
+			
+                                </fieldset>
 			</g:form>
 		</div>
 	</body>

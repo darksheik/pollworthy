@@ -4,10 +4,11 @@ class BootStrap {
 
     def init = { servletContext ->
          if (!User.count()) {
-            def user1 = new User(name: "Don").save(failOnError: true)
-            def user2 = new User(name: "Griffin").save(failOnError: true)
 
-            def poll1 = new Poll(name: "A Lot About Chickens")
+            def user1 = new User(name: "Don",email:"don@don.com",password:"password").save(failOnError: true)
+            def user2 = new User(name: "Griffin",email:"griffin@griffin.com",password:"password").save(failOnError: true)
+
+            def poll1 = new Poll(name: "A Lot About Chickens",user:user1)
                   .addToQuestions(new Question(text: "How many chickens would you like to have?")
                       .addToAnswers(new Answer(text: "5"))
                       .addToAnswers(new Answer(text: "10"))
@@ -22,13 +23,11 @@ class BootStrap {
                       .addToAnswers(new Answer(text: "Still in my loving care and tutelage"))
                       .addToAnswers(new Answer(text: "On my plate"))
                       ).save(failOnError: true)
-               
-            def comment1 = new Comment(content: "This poll is really demented.").save(failOnError: true)
-            user2.addToComments(comment1)
-            poll1.addToComments(comment1)
 
 
-            def poll2 = new Poll(name: "Griffin's Quiz")
+            def comment1 = new Comment(content: "This poll is really demented.",user:user2,poll:poll1).save(failOnError: true)
+
+            def poll2 = new Poll(name: "Griffin's Quiz",user:user2)
                   .addToQuestions(new Question(text: "What's your sign?")
                       .addToAnswers(new Answer(text: "Cancer"))
                       .addToAnswers(new Answer(text: "Taurus"))
@@ -39,13 +38,10 @@ class BootStrap {
                       .addToAnswers(new Answer(text: "Foie Gras"))
                       .addToAnswers(new Answer(text: "Cheeseburgers"))
                       ).save(failOnError: true)
-               
-            def comment2 = new Comment(content: "This poll is pretty good.").save(failOnError: true)
-            def comment3 = new Comment(content: "Hey, thanks!").save(failOnError: true)
-            user1.addToComments(comment2)
-            poll2.addToComments(comment2)
-            user2.addToComments(comment3)
-            poll2.addToComments(comment3)
+
+            def comment2 = new Comment(content: "This poll is pretty good.",user:user1,poll:poll2).save(failOnError: true)
+            def comment3 = new Comment(content: "Hey, thanks!",user:user2,poll:poll2).save(failOnError: true)
+
 
         }
     }

@@ -20,4 +20,4 @@ Classes:
 USER <---  POLL <---- QUESTION
   ^                       |
   |                       V
-  *-------RESPONSE<----ANSWER
+  *-------RESPONSE----->ANSWER

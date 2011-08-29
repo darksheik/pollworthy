@@ -12,7 +12,8 @@ class PollController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [pollInstanceList: Poll.list(params), pollInstanceTotal: Poll.count()]
+        [pollInstanceList: Poll.findByUser(session.user,params), pollInstanceTotal: Poll.count()]
+
     }
 
     def create() {
@@ -30,6 +31,22 @@ class PollController {
         redirect(action: "show", id: pollInstance.id)
     }
 
+    def saveanswers() {
+        def pollInstance = Poll.get(params.id)
+        // Destroy old responses
+        def r = Response.findAllByUser(session.user)
+        r.each {
+          if (it.answer.question.poll.id == pollInstance.id) {
+             it.delete()
+          }
+        }
+
+        // Insert new ones
+        
+        
+        flash.message = message(code: "Done!")
+        redirect(action: "show", id: pollInstance.id)
+    }
     def show() {
         def pollInstance = Poll.get(params.id)
         if (!pollInstance) {

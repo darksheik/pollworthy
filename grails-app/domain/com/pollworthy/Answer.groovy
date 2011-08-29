@@ -2,7 +2,7 @@ package com.pollworthy
 
 class Answer {
   static hasMany = [responses:Response]
-  static belongsTo = [Question,User]
+  static belongsTo = [question:Question]
   String text
     static constraints = {
     }
