@@ -42,24 +42,21 @@ class PollController {
           }
         }
 
-        def outputString = new String()
-
         // Insert new ones
         params.each {
           if (it.key.startsWith('answer')){
-          outputString += it.key + " - " + it.value + " - " + it.value.class + ", "
           def a = Answer.findById(it.value.toInteger())
           def rn = new Response(user:u,answer:a).save()
-          outputString += a.toString()
-          outputString += rn.toString()
           }
         }
         
-        flash.message = message(code: outputString)
+        flash.message = message(code: 'Responses saved!')
         redirect(action: "show", id: pollInstance.id)
     }
     def show() {
         def pollInstance = Poll.get(params.id)
+        def u = User.findById(session.user.id)
+        pollInstance.popQuestionMap(session.user.id)
         if (!pollInstance) {
 			flash.message = message(code: 'default.not.found.message', args: [message(code: 'poll.label', default: 'Poll'), params.id])
             redirect(action: "list")
