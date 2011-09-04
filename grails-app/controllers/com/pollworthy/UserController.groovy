@@ -102,6 +102,8 @@ class UserController {
     }
 
 def login = {
+if (session.user) 
+redirect(controller:'poll',action:'index')
 }
 
 def doLogin = {

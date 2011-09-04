@@ -26,15 +26,10 @@
 			
 				<g:if test="${pollInstance?.name}">
 				<li class="fieldcontain">
-					(id ${pollInstance?.user}, logged in = ${session.user}, same? ${pollInstance?.user.id == session.user.id}) 				
 						Poll # ${pollInstance?.id}: <B><I><g:fieldValue bean="${pollInstance}" field="name"/></span></I></B> 
                                         &nbsp;&nbsp;(by <g:link controller="user" action="show" id="${pollInstance.user.id}">
-                                        <g:if test="${pollInstance?.user.id == session.user.id}">
-                                          you!
-                                        </g:if>
-                                        <g:else>
-                                          ${pollInstance?.user.name}
-                                        </g:else></g:link>)
+                                        <g:if test="${pollInstance?.user.id == session.user.id}">you!</g:if>
+                                        <g:else>${pollInstance?.user.name}</g:else></g:link>)
 					
 				</li>
 				</g:if>
@@ -46,7 +41,6 @@
 						   <li class="questioninpoll">${q.text}</li>
 
                                                    <g:if test="${q?.answers}">
-                                               <!--Debug question object: ${q.class}<BR>The Question Map: ${pollInstance.qmap[q.id.toString()]}-->
                                                   <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}.id}" 
                                                           value="${pollInstance.qmap[q.id.toString()]}"   >
                                                    <p>${it.radio} ${it.label} </p>

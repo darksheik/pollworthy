@@ -12,8 +12,8 @@ class PollController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [pollInstanceList: Poll.findByUser(session.user,params), pollInstanceTotal: Poll.count()]
-
+        [pollInstanceList: Poll.findByUser(session.user,params), pollInstanceTotal: Poll.count(),
+         pollNonUserList: Poll.findByUserNotEqual(session.user,params)]
     }
 
     def create() {

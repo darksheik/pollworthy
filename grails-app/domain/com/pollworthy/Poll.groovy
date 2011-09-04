@@ -16,7 +16,6 @@ class Poll {
          def r = Response.findWhere(user:u,answer:it)
          if (r) { 
               qmap[r.answer.question.id.toString()] = r.answer.id.toString()
-//            this.qmap[r.answer.question.id] = r.id 
             } 
        }
     }

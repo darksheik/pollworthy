@@ -16,7 +16,7 @@
 			</ul>
 		</div>
 		<div id="list-poll" class="content scaffold-list" role="main">
-			<h1><g:message code="default.list.label" args="[entityName]" /></h1>
+			<h1>Your Polls</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
@@ -33,6 +33,33 @@
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
 						<td><g:link action="show" id="${pollInstance.id}">${fieldValue(bean: pollInstance, field: "name")}</g:link></td>
+					
+					</tr>
+				</g:each>
+				</tbody>
+			</table>
+			<div class="pagination">
+				<g:paginate total="${pollInstanceTotal}" />
+			</div>
+		</div>
+
+		<div id="list-poll2" class="content scaffold-list" role="main">
+			<h1>Other Users' Polls</h1>
+			<table>
+				<thead>
+					<tr>
+					
+						<g:sortableColumn property="name" title="${message(code: 'poll.name.label', default: 'Name')}" />
+						<g:sortableColumn property="user" title="${message(code: 'poll.user.name', default: 'User')}" />
+						
+					</tr>
+				</thead>
+				<tbody>
+				<g:each in="${pollNonUserList}" status="i" var="pollInstance">
+					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+					
+						<td><g:link action="show" id="${pollInstance.id}">${fieldValue(bean: pollInstance, field: "name")}</g:link></td>
+					        <td><g:link controller="user" action="show" id="${pollInstance.user.id}">${pollInstance.user.name}</g:link></td>
 					
 					</tr>
 				</g:each>
