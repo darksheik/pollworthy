@@ -17,38 +17,17 @@
 			</ul>
 		</div>
 		<div id="show-user" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<h1><B><g:fieldValue bean="${userInstance}" field="name"/></B></h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>
 			<ol class="property-list user">
 			
-				<g:if test="${userInstance?.comments}">
+				<g:if test="${userInstance?.polls}">Polls by this user:
 				<li class="fieldcontain">
-					<span id="comments-label" class="property-label"><g:message code="user.comments.label" default="Comments" /></span>
-					
-						<g:each in="${userInstance.comments}" var="c">
-						<span class="property-value" aria-labelledby="comments-label"><g:link controller="comment" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
-						</g:each>
-					
-				</li>
-				</g:if>
 			
-				<g:if test="${userInstance?.name}">
-				<li class="fieldcontain">
-					<span id="name-label" class="property-label"><g:message code="user.name.label" default="Name" /></span>
-					
-						<span class="property-value" aria-labelledby="name-label"><g:fieldValue bean="${userInstance}" field="name"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${userInstance?.polls}">
-				<li class="fieldcontain">
-					<span id="polls-label" class="property-label"><g:message code="user.polls.label" default="Polls" /></span>
-					
 						<g:each in="${userInstance.polls}" var="p">
-						<span class="property-value" aria-labelledby="polls-label"><g:link controller="poll" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="polls-label"><g:link controller="poll" action="show" id="${p.id}">${p?.name}</g:link></span>
 						</g:each>
 					
 				</li>

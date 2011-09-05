@@ -22,6 +22,7 @@ class PollController {
 
     def save() {
         def pollInstance = new Poll(params)
+        pollInstance.user = User.findById(session.user.id)
         if (!pollInstance.save(flush: true)) {
             render(view: "create", model: [pollInstance: pollInstance])
             return
@@ -33,14 +34,8 @@ class PollController {
 
     def saveanswers() {
         def pollInstance = Poll.get(params.id)
-        // Destroy old responses
-        def u = User.findById(session.user.id)
-        def r = Response.findAllByUser(u)
-        r.each {
-          if (it.answer.question.poll.id == pollInstance.id) {
-             it.delete()
-          }
-        }
+
+        destroyanswers() 
 
         // Insert new ones
         params.each {
@@ -52,6 +47,19 @@ class PollController {
         
         flash.message = message(code: 'Responses saved!')
         redirect(action: "show", id: pollInstance.id)
+    }
+
+    def destroyanswers() {
+        def pollInstance = Poll.get(params.id)
+
+        // Destroy old responses
+        def u = User.findById(session.user.id)
+        def r = Response.findAllByUser(u)
+        r.each {
+          if (it.answer.question.poll.id == pollInstance.id) {
+             it.delete()
+          }
+        }        
     }
     def show() {
         def pollInstance = Poll.get(params.id)
