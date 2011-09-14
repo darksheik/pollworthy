@@ -14,7 +14,6 @@
 				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
-               pollid: ${pollInstance.id}
 		<div id="create-question" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -29,7 +28,13 @@
 			</g:hasErrors>
 			<g:form action="save" >
 				<fieldset class="form">
-					<g:render template="form"/>
+Enter the question: <g:textField name="text" value="${text}" />
+<BR><BR>Add some initial answers (you can add more later!):<BR>
+<g:textField name="answer1" /><BR>
+<g:textField name="answer2" /><BR>
+<g:textField name="answer3" /><BR>
+<g:textField name="answer4" /><BR>
+<g:textField name="answer5" /><BR>
 				</fieldset>
 <g:hiddenField name="pollid" value="${params.pollid}" />
 				<fieldset class="buttons">

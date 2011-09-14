@@ -34,7 +34,7 @@ class PollController {
 
     def saveanswers() {
         def pollInstance = Poll.get(params.id)
-
+        def u = session.user
         destroyanswers() 
 
         // Insert new ones

@@ -28,8 +28,14 @@ class QuestionController {
             return
         }
 
+            params.each {
+               if (it.key.startsWith('answer') && it.value.size() > 0){
+               def a = new Answer(text:it.value,question:questionInstance)
+               a.save()
+               }
+            }
 		flash.message = message(code: 'default.created.message', args: [message(code: 'question.label', default: 'Question'), questionInstance.id])
-        redirect(action: "show", id: questionInstance.id)
+        redirect(controller: "poll", action: "show", id: pollInstance.id)
     }
 
     def show() {
