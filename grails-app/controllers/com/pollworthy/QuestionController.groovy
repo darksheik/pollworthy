@@ -16,13 +16,15 @@ class QuestionController {
     }
 
     def create() {
-        [questionInstance: new Question(params)]
+        [questionInstance: new Question(params),pollInstance: Poll.get(params.pollid)]
     }
 
     def save() {
         def questionInstance = new Question(params)
+        def pollInstance = Poll.get(params.pollid)
+        questionInstance.poll = pollInstance
         if (!questionInstance.save(flush: true)) {
-            render(view: "create", model: [questionInstance: questionInstance])
+            render(controller: "poll", view: "show", id: pollInstance.id)
             return
         }
 

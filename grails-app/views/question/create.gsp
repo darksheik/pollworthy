@@ -14,6 +14,7 @@
 				<li><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
+               pollid: ${pollInstance.id}
 		<div id="create-question" class="content scaffold-create" role="main">
 			<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 			<g:if test="${flash.message}">
@@ -30,6 +31,7 @@
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>
+<g:hiddenField name="pollid" value="${params.pollid}" />
 				<fieldset class="buttons">
 					<g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
 				</fieldset>

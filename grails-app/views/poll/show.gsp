@@ -38,7 +38,8 @@
 				<li class="fieldcontain">
 					<ol class="questions-poll">
 						<g:each in="${pollInstance.questions.sort{it.id}}" var="q">
-						   <li class="questioninpoll">${q.text}</li>
+						   <li class="questioninpoll">${q.text}  <g:if test="${pollInstance?.user.id == session.user.id}">
+                        <g:link controller="question" action="edit" id="${q.id}"><font size=1>(edit)</font></g:link></g:if></li>
 
                                                    <g:if test="${q?.answers}">
                                                   <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}.id}" 
@@ -61,7 +62,7 @@
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</g:if>
 		<g:actionSubmit class="saveanswers" action="saveanswers" value="${message(code: 'default.button.save.label', default: 'Save Answers!')}"  />
-			
+			<g:link controller="question" action="create" params="[pollid: pollInstance.id]">New Question</g:link>
                                 </fieldset>
 			</g:form>
 		</div>
