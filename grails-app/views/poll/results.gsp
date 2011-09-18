@@ -38,14 +38,19 @@
 				<li class="fieldcontain">
 					<ol class="questions-poll">
 						<g:each in="${pollInstance.questions.sort{it.id}}" var="q">
-						   <li class="questioninpoll">${q.text}  <g:if test="${pollInstance?.user.id == session.user.id}">
-                        <g:link controller="question" action="edit" id="${q.id}"><font size=1>(edit)</font></g:link></g:if></li>
+						   <li class="questioninpoll">${q.text}</li>
 
                                                    <g:if test="${q?.answers}">
-                                                  <g:radioGroup name="answers${q.id}" labels="${q?.answers.sort{it.id}.text}" values="${q?.answers.sort{it.id}.id}" 
-                                                          value="${pollInstance.qmap[q.id.toString()]}"   >
-                                                   <p>${it.radio} ${it.label} </p>
-                                                   </g:radioGroup>
+                                                     <table>
+                                                     <g:each in="${q?.answers.sort{it.id}}" var="a">
+                                                       <tr><td>
+                                                       ${a.text}
+                                                       </td>
+                                                       <td>
+                                                       ${a?.responses.size()} of ${q?.answers.responses.flatten().size()}, <g:formatNumber number="${((a?.responses.size() / q?.answers.responses.flatten().size()) *100)}" type="number" maxFractionDigits="2" />%
+                                                       </td>
+                                                     </g:each>
+                                                     </table>
                                                    </g:if>
 						</g:each>
                                         </ol>
@@ -62,10 +67,7 @@
 					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
 				</g:if>
 		<g:actionSubmit class="saveanswers" action="saveanswers" value="${message(code: 'default.button.save.label', default: 'Save Answers!')}"  />
-			<g:if test="${pollInstance?.user.id == session.user.id}">
-                            <g:link controller="question" action="create" params="[pollid: pollInstance.id]">New Question</g:link>
-                        </g:if>
-                        <g:link action="results" id="${pollInstance.id}">View Results!</g:link>
+			<g:link controller="question" action="create" params="[pollid: pollInstance.id]">New Question</g:link>
                                 </fieldset>
 			</g:form>
 		</div>

@@ -74,6 +74,19 @@ class PollController {
         [pollInstance: pollInstance]
     }
 
+    def results() {
+        def pollInstance = Poll.get(params.id)
+        def u = User.findById(session.user.id)
+
+        if (!pollInstance) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: 'poll.label', default: 'Poll'), params.id])
+            redirect(action: "list")
+            return
+        }
+
+        [pollInstance: pollInstance]
+    }
+
     def edit() {
         def pollInstance = Poll.get(params.id)
         if (!pollInstance) {
