@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="body">
-<g:form action="doLogin" method="post">
+<g:form action="handleLogin" method="post">
 <div class="dialog">
 <p>Enter your login details below:</p>
 <table class="userForm">

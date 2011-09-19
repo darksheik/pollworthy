@@ -94,23 +94,45 @@ class UserController {
         }
     }
 
-def login = {
-if (session.user) 
-redirect(controller:'poll',action:'index')
+def login = { if (session.user) { redirect(controller:'poll', action:'list') } }
+
+def handleLogin = { 
+    def user = User.findByEmail(params.email) 
+    if (user) { 
+        if (user.password == params.password.encodeAsPassword()) { 
+           session.user = user 
+           redirect(controller:'poll', action:'list') 
+        } else { 
+           flash.message = "Incorrect password for ${params.email}" 
+           redirect(action:login) 
+        } 
+    } else { 
+        flash.message = "User not found for email ${params.email}" 
+        redirect(action:login) 
+    } 
 }
 
-def doLogin = {
-def user = User.findWhere(email:params['email'],
-password:params['password'])
-session.user = user
-if (user)
-redirect(controller:'poll',action:'index')
-else
-redirect(controller:'user',action:'login')
+def register = {}
+
+def handleRegistration = { 
+    def user = new User(params) 
+    if (params.password != params.confirm) { 
+        flash.message = "The passwords you entered do not match." 
+        redirect(action:register) 
+    } else { 
+        user.password = params.password.encodeAsPassword() 
+        if (user.save()) { 
+          redirect(controller:'poll', action:'list') 
+        } else { 
+          flash.user = user 
+          redirect(action:register) 
+        } 
+    } 
 }
 
-def doLogout = {
-session.user = null
+def logout = {
+    session.user = null
+    redirect(action:login)
 }
 
 }

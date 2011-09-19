@@ -17,8 +17,19 @@
 		<g:layoutHead/>
 	</head>
 	<body>
-		<div id="pollworthyLogo" role="banner"><img src="${resource(dir: 'images', file: 'pollworthy.gif')}" alt="Pollworthy"/></a></div>
-		<g:layoutBody/>
+
+                   <div id="pollworthyLogo" role="banner">
+ 		<table><tr><td>
+                     <img src="${resource(dir: 'images', file: 'pollworthy.gif')}" alt="Pollworthy"/></a>
+		</td>
+                <td align=right>
+                  <g:if test="${session.user != null}">
+                     <g:link class="headerlink" controller="user" action="logout">Log Out</g:link>
+                  </g:if>
+                </td>
+                </tr></table>
+                </div>
+                <g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>
 		<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
 		<g:javascript library="application"/>
